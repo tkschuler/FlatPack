@@ -22,6 +22,14 @@ class Furniture{
         }
             return null;
     }
+
+    public List<Board> getBoards() {
+        return boards;
+    }
+
+    public List<Joint> getJoints() {
+        return joints;
+    }
 }
 
 class Board{

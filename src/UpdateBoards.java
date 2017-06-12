@@ -76,6 +76,11 @@ public class UpdateBoards {
             UpdateShapes updatedJointShapes = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
             holes = updatedJointShapes.makeReceptorHoles();
 
+            GsonBuilder builder = new GsonBuilder();
+            builder.setPrettyPrinting().serializeNulls();
+            Gson gson2 = builder.create();
+            System.out.println(gson2.toJson(rightAngleTest));
+
         }
 
         //Update Receptor
