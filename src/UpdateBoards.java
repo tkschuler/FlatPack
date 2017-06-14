@@ -77,7 +77,7 @@ public class UpdateBoards {
             //Joint Type, NumberOfTeeth, and PlugThickness will all be user input
             //First Receptor holes
             UpdateShapes updatedJointShapes = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
-            holes = updatedJointShapes.makeReceptorHoles();
+            holes = updatedJointShapes.updateReceptors();
 
             GsonBuilder builder = new GsonBuilder();
             builder.setPrettyPrinting().serializeNulls();
