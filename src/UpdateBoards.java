@@ -34,7 +34,7 @@ public class UpdateBoards {
 
         numberOfTeeth = 3;
         jointType = "sawtooth";
-        plugThickness = 60.0;
+        plugThickness = 30.0;
 
 
         //----------------------------------------------------------------------------------------------------------------------

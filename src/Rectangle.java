@@ -30,24 +30,24 @@ public class Rectangle {
         double[] point = new double[2];
         //[x,y]
         //Top Right Corner
-        point[0] = centerPoint[0] + sectionDistance/2;
-        point[1] = centerPoint[1] + plugThickness/2;
-        rectangle.add(new double[]{centerPoint[0] + sectionDistance/2,centerPoint[1] + plugThickness/2});
+        point[0] = centerPoint[0] + sectionDistance;
+        point[1] = centerPoint[1] + plugThickness;
+        rectangle.add(new double[]{centerPoint[0] + sectionDistance,centerPoint[1] + plugThickness/2});
 
         //Top Left Corner
-        point[0] = centerPoint[0] - sectionDistance/2;
-        point[1] = centerPoint[1] + plugThickness/2;
-        rectangle.add(new double[]{centerPoint[0] - sectionDistance/2, centerPoint[1] + plugThickness/2});
+        point[0] = centerPoint[0] - sectionDistance;
+        point[1] = centerPoint[1] + plugThickness;
+        rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1] + plugThickness/2});
 
         //Bottom Left Corner
-        point[0] = centerPoint[0] - sectionDistance/2;
-        point[1] = centerPoint[1] - plugThickness/2;
-        rectangle.add(new double[]{centerPoint[0] - sectionDistance/2, centerPoint[1] - plugThickness/2});
+        point[0] = centerPoint[0] - sectionDistance;
+        point[1] = centerPoint[1] - plugThickness;
+        rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1] - plugThickness/2});
 
         //Bottom Right Corner
-        point[0] = centerPoint[0] + sectionDistance/2;
-        point[1] = centerPoint[1] - plugThickness/2;
-        rectangle.add(new double[]{centerPoint[0] + sectionDistance/2, centerPoint[1] - plugThickness/2});
+        point[0] = centerPoint[0] + sectionDistance;
+        point[1] = centerPoint[1] - plugThickness;
+        rectangle.add(new double[]{centerPoint[0] + sectionDistance, centerPoint[1] - plugThickness/2});
 
     }
 

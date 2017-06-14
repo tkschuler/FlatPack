@@ -33,7 +33,7 @@ class UpdateShapes {
         if (X2 == X1)
             angle = 0;
         else
-            angle = Math.atan((Y2 - Y1) / (X2 - X1)) + 1.5708;
+            angle = Math.atan((Y2 - Y1) / (X2 - X1)); //+ 1.5708;
     }
 
 
@@ -83,7 +83,7 @@ class UpdateShapes {
         a rectangle with the correct dimensions, then rotating the points by the angle from the slope
 
          */
-        double numberOfSectionPoints = 2 * ((numberOfTeeth * 2) - 1);
+        double numberOfSectionPoints = 2 * ((numberOfTeeth * 2) - 1);  //section points is double number of sections
         sectionDistance = distance / numberOfSectionPoints;
         double dt = sectionDistance;
         int n = 0;
