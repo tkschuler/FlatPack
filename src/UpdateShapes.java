@@ -55,10 +55,8 @@ class UpdateShapes {
             angle = Math.atan((Y2 - Y1) / (X2 - X1));
     }
 
-    public List<double[][]> makeReceptorHoles() {
-        double w = plugThickness;
+    public List<List<double[]>> makeReceptorHoles() {
         squareToothSpacing();
-        double l = jointSpacing;
 
         //array of rectangle centers for the teeth
         double[][] centerPoints = new double[numberOfTeeth][2];
@@ -103,8 +101,8 @@ class UpdateShapes {
 
         //return centerPoints;
 
-        double[][] rectangle = new double[4][2];
-        List<double[][]> rectangles = new ArrayList<>();
+        List<double[]> rectangle = new ArrayList();
+        List<List<double[]>> rectangles = new ArrayList<>();
 
         //[[0,0],[0,0],[0,0],[0,0]]
 
@@ -122,8 +120,8 @@ class UpdateShapes {
 
     public static void main(String[] args) {
         double[][] connectingLine = new double[][]{{1, 2}, {5, 7}};
-        UpdateShapes joint1 = new UpdateShapes("hi", 3, 1.0, connectingLine);
-        List<double[][]> returnedRectangles = joint1.makeReceptorHoles();
+        UpdateShapes joint1 = new UpdateShapes("hi", 3, 30.0, connectingLine);
+        List<List<double[]>> returnedRectangles = joint1.makeReceptorHoles();
         System.out.println("WAZZZZZUP");
 
 

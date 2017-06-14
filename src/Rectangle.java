@@ -1,11 +1,15 @@
+import java.util.*;
+
+//This class creates a list of Rectangle points that is called by UpdateShapes.
+
 public class Rectangle {
     double[] centerPoint = new double[2];
     double plugThickness;
     double sectionDistance;
     double angle;
 
-    double[][] rectangle = new double[4][2];  //Normal Rectangle
-    double[][] rectangleRotated = new double[4][2];  //Rotated Rectangle that matches slope of line
+    List<double[]> rectangle = new ArrayList();  //Normal Rectangle
+    List<double[]> rectangleRotated = new ArrayList();  //Rotated Rectangle that matches slope of line
 
     public Rectangle(double[] centerPoint, double plugThickness, double sectionDistance) {
         this.centerPoint = centerPoint;
@@ -20,45 +24,61 @@ public class Rectangle {
         this.angle = angle;
     }
 
+
     public void createRectangleCorners(){
+
+        double[] point = new double[2];
         //[x,y]
         //Top Right Corner
-        rectangle[0][0] = centerPoint[0] + sectionDistance/2;
-        rectangle[0][1] = centerPoint[1] + plugThickness/2;
+        point[0] = centerPoint[0] + sectionDistance/2;
+        point[1] = centerPoint[1] + plugThickness/2;
+        rectangle.add(new double[]{centerPoint[0] + sectionDistance/2,centerPoint[1] + plugThickness/2});
 
         //Top Left Corner
-        rectangle[1][0] = centerPoint[0] - sectionDistance/2;
-        rectangle[1][1] = centerPoint[1] + plugThickness/2;
+        point[0] = centerPoint[0] - sectionDistance/2;
+        point[1] = centerPoint[1] + plugThickness/2;
+        rectangle.add(new double[]{centerPoint[0] - sectionDistance/2, centerPoint[1] + plugThickness/2});
 
         //Bottom Left Corner
-        rectangle[2][0] = centerPoint[0] - sectionDistance/2;
-        rectangle[2][1] = centerPoint[1] - plugThickness/2;
+        point[0] = centerPoint[0] - sectionDistance/2;
+        point[1] = centerPoint[1] - plugThickness/2;
+        rectangle.add(new double[]{centerPoint[0] - sectionDistance/2, centerPoint[1] - plugThickness/2});
 
         //Bottom Right Corner
-        rectangle[3][0] = centerPoint[0] + sectionDistance/2;
-        rectangle[3][1] = centerPoint[1] - plugThickness/2;
+        point[0] = centerPoint[0] + sectionDistance/2;
+        point[1] = centerPoint[1] - plugThickness/2;
+        rectangle.add(new double[]{centerPoint[0] + sectionDistance/2, centerPoint[1] - plugThickness/2});
 
     }
 
-    public double[][] getRectangle() {
+    public List<double[]> getRectangle() {
         return rectangle;
     }
 
-    public double[][] createRotatedRectangleCorners() {
-        rectangleRotated[0][0] = centerPoint[0] + (Math.cos(angle) * (rectangle[0][0] - centerPoint[0]) - Math.sin(angle) * (rectangle[0][1] - centerPoint[1]));
-        rectangleRotated[0][1] = centerPoint[1] + (Math.sin(angle) * (rectangle[0][0] - centerPoint[0]) + Math.cos(angle) * (rectangle[0][1] - centerPoint[1]));
+    public List<double[]> createRotatedRectangleCorners() {
+        //Top Right Corner
+        double[] point = new double[2];
+        point[0] = centerPoint[0] + (Math.cos(angle) * (rectangle.get(0)[0] - centerPoint[0]) - Math.sin(angle) * (rectangle.get(0)[1] - centerPoint[1]));
+        point[1] = centerPoint[1] + (Math.sin(angle) * (rectangle.get(0)[0] - centerPoint[0]) + Math.cos(angle) * (rectangle.get(0)[1] - centerPoint[1]));
+        rectangleRotated.add(point);
 
         //Top Left Corner
-        rectangleRotated[1][0] = centerPoint[0] + (Math.cos(angle) * (rectangle[1][0] - centerPoint[0]) - Math.sin(angle) * (rectangle[1][1] - centerPoint[1]));
-        rectangleRotated[1][1] = centerPoint[1] + (Math.sin(angle) * (rectangle[1][0] - centerPoint[0]) + Math.cos(angle) * (rectangle[1][1] - centerPoint[1]));
+        double[] point1 = new double[2];
+        point1[0] = centerPoint[0] + (Math.cos(angle) * (rectangle.get(1)[0] - centerPoint[0]) - Math.sin(angle) * (rectangle.get(1)[1] - centerPoint[1]));
+        point1[1] = centerPoint[1] + (Math.sin(angle) * (rectangle.get(1)[0] - centerPoint[0]) + Math.cos(angle) * (rectangle.get(1)[1] - centerPoint[1]));
+        rectangleRotated.add(point1);
 
         //Bottom Left Corner
-        rectangleRotated[2][0] = centerPoint[0] + (Math.cos(angle) * (rectangle[2][0] - centerPoint[0]) - Math.sin(angle) * (rectangle[2][1] - centerPoint[1]));
-        rectangleRotated[2][1] = centerPoint[1] + (Math.sin(angle) * (rectangle[2][0] - centerPoint[0]) + Math.cos(angle) * (rectangle[2][1] - centerPoint[1]));
+        double[] point2 = new double[2];
+        point2[0] = centerPoint[0] + (Math.cos(angle) * (rectangle.get(2)[0] - centerPoint[0]) - Math.sin(angle) * (rectangle.get(2)[1] - centerPoint[1]));
+        point2[1] = centerPoint[1] + (Math.sin(angle) * (rectangle.get(2)[0] - centerPoint[0]) + Math.cos(angle) * (rectangle.get(2)[1] - centerPoint[1]));
+        rectangleRotated.add(point2);
 
         //Bottom Right Corner
-        rectangleRotated[3][0] = centerPoint[0] + (Math.cos(angle) * (rectangle[3][0] - centerPoint[0]) - Math.sin(angle) * (rectangle[3][1] - centerPoint[1]));
-        rectangleRotated[3][1] = centerPoint[1] + (Math.sin(angle) * (rectangle[3][0] - centerPoint[0]) + Math.cos(angle) * (rectangle[3][1] - centerPoint[1]));
+        double[] point3 = new double[2];
+        point3[0] = centerPoint[0] + (Math.cos(angle) * (rectangle.get(3)[0] - centerPoint[0]) - Math.sin(angle) * (rectangle.get(3)[1] - centerPoint[1]));
+        point3[1] = centerPoint[1] + (Math.sin(angle) * (rectangle.get(3)[0] - centerPoint[0]) + Math.cos(angle) * (rectangle.get(3)[1] - centerPoint[1]));
+        rectangleRotated.add(point3);
 
         return rectangleRotated;
     }

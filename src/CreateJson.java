@@ -38,7 +38,7 @@ class Board{
     //Coordinates will be a list of list of coordinates, to allow addition of holes.
     //i.e. { { [0,0],[0,50],[50,50],[50,0] } , { [10,10],[10,20] } , { [10,40],[10,30] } }
     private List<double[]> mainCoordinates;
-    private List<double[][]> holes;
+    private List<List<double[]>> holes;
 
 
     public Board(String boardName, double thickness, List<double[]> coordinates) {
@@ -55,11 +55,11 @@ class Board{
         return mainCoordinates;
     }
 
-    public List<double[][]> getHoles() {
+    public List<List<double[]>> getHoles() {
         return holes;
     }
 
-    public void setHoles(List<double[][]> holes) {
+    public void setHoles(List<List<double[]>> holes) {
         this.holes = holes;
     }
 }
