@@ -54,7 +54,7 @@ public class exportSVG {
 
         for (Board b : boards) {
             try {
-                PrintWriter writer = new PrintWriter("board-" + counter + ".txt", "UTF-8");
+                PrintWriter writer = new PrintWriter("/Users/tristanschuler/Desktop/FlatPack/out/files/board-" + counter + ".txt", "UTF-8");
                 writer.println("<svg height=\"600\" width=\"600\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">");
                 List<double[]> mainCoordinates = b.getCoordinates();
                 List<List<double[]>> holes = b.getHoles();
