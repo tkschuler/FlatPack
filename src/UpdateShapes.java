@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.List;
 
 //Right now this Class only handles creating squaretooth joints, for both plugs and receptors, depending on the String Type
@@ -31,9 +30,9 @@ class UpdateShapes {
         Y2 = connectingLine[1][1];
 
         if (X2 == X1)
-            angle = 0;
+            angle = 1.5708;
         else
-            angle = Math.atan((Y2 - Y1) / (X2 - X1)); //+ 1.5708;
+            angle = Math.atan((Y2 - Y1) / (X2 - X1)); //+ Math.PI;
     }
 
 
@@ -57,8 +56,8 @@ class UpdateShapes {
 
     public List<List<double[]>> updateReceptors() {
         squareToothSpacing();
-        Receptor r = new Receptor(numberOfTeeth, sectionDistance, distance, plugThickness, angle, X1, X2, Y1, Y2);
-        List<List<double[]>> rectangles = r.makeReceptorHoles();
+        Plugs r = new Plugs(numberOfTeeth, sectionDistance, distance, plugThickness, angle, X1, X2, Y1, Y2);
+        List<List<double[]>> rectangles = r.makePlugsForReceptors();
 
         return rectangles;
     }

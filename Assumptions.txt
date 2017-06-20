@@ -1,0 +1,14 @@
+FlatPack Furniture Assumptions:
+
+Boards:
+-Main Coordinates come in counter-clockwise order
+	-Plug connecting lines will originally be included on main shape (Redundancy)
+-Hole come in clockwise order
+
+Imported JSON data for Joints includes:
+-plug name, plug connecting line
+-Receptor name, plug connecting line
+-joint type
+
+
+For now all joints are in 2D

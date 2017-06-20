@@ -34,25 +34,24 @@ public class UpdateBoards {
 
         numberOfTeeth = 3;
         jointType = "sawtooth";
-        plugThickness = 30.0;
+        plugThickness = 50.0;
 
 
         //----------------------------------------------------------------------------------------------------------------------
         //Board Square 1 Information for Testing
         List<double[]> board1points = new ArrayList<>();
         board1points.add(new double[]{0,0});
-        board1points.add(new double[]{0,500});
-        board1points.add(new double[]{500,500});
         board1points.add(new double[]{500,0});
+        board1points.add(new double[]{500,500});
+        board1points.add(new double[]{0,500});
         Board square1 = new Board("Square1", 30, board1points);
 
         //----------------------------------------------------------------------------------------------------------------------
         //Board Square 2 Information for Testing
         List<double[]> board2points = new ArrayList<>();
-        board2points.add(new double[]{0,0});
-        board2points.add(new double[]{0,500});
+        board2points.add(new double[]{250,67});
         board2points.add(new double[]{500,500});
-        board2points.add(new double[]{500,0});
+        board2points.add(new double[]{0,500});
         Board square2 = new Board("Square2", 30, board2points);
 
         //----------------------------------------------------------------------------------------------------------------------
@@ -61,7 +60,7 @@ public class UpdateBoards {
         boards.add(square2);
 
         List<Joint> joints = new ArrayList<>();
-        Joint joint1 = new Joint("Square1", "Square2", null, new double[][]{{0,0},{500,500}}, new double[][]{{100,100},{250,250}});
+        Joint joint1 = new Joint("Square1", "Square2", null, new double[][]{{0,0},{500,500}}, new double[][]{{0,500},{250,67}});
         joints.add(joint1);
 
         Furniture rightAngleTest = new Furniture("Right Angle Test", boards, joints);
@@ -75,7 +74,7 @@ public class UpdateBoards {
 
             //Extract infromation from Joint to create new shapes
             //Joint Type, NumberOfTeeth, and PlugThickness will all be user input
-            //First Receptor holes
+            //First Receptors holes
             UpdateShapes updatedJointShapes = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
             holes = updatedJointShapes.updateReceptors();
 
@@ -86,7 +85,7 @@ public class UpdateBoards {
 
         }
 
-        //Update Receptor
+        //Update Receptors
         for (Board b : rightAngleTest.boards){
             if (b.getBoardName().equals(joint1.receptorName))
             b.setHoles(holes);
