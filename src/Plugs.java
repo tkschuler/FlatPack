@@ -10,13 +10,15 @@ public class Plugs {
     double plugThickness;
     double angle;
     double X1, X2, Y1, Y2;
+    String extrusionDirection;
 
-    public Plugs(int numberOfTeeth, double sectionDistance, double distance, double plugThickness, double angle, double x1, double x2, double y1, double y2) {
+    public Plugs(int numberOfTeeth, double sectionDistance, double distance, double plugThickness, double angle, double x1, double x2, double y1, double y2, String extrusionDirection) {
         this.numberOfTeeth = numberOfTeeth;
         this.sectionDistance = sectionDistance;
         this.distance = distance;
         this.plugThickness = plugThickness;
         this.angle = angle;
+        this.extrusionDirection = extrusionDirection;
         X1 = x1;
         X2 = x2;
         Y1 = y1;
@@ -63,8 +65,8 @@ public class Plugs {
 
         for (int i = 0; i < centerPoints.length; i++) {
 
-            Rectangle rect = new Rectangle(centerPoints[i], plugThickness, sectionDistance, angle);
-            rect.createPlugRectangleCorners(); //There is also a Receptors version
+            Rectangle rect = new Rectangle(centerPoints[i], plugThickness, sectionDistance, angle, extrusionDirection);
+            rect.createPlugShiftedRectangle(extrusionDirection); //There is also a Receptors version
             rectangle = rect.createRotatedRectangleCorners();
 
             rectangles.add(rectangle);

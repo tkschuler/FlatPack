@@ -7,21 +7,25 @@ public class Rectangle {
     double plugThickness;
     double sectionDistance;
     double angle;
+    String extrusionDirection;
 
     List<double[]> rectangle = new ArrayList();  //Normal Rectangle
     List<double[]> rectangleRotated = new ArrayList();  //Rotated Rectangle that matches slope of line
 
-    public Rectangle(double[] centerPoint, double plugThickness, double sectionDistance) {
-        this.centerPoint = centerPoint;
-        this.plugThickness = plugThickness;
-        this.sectionDistance = sectionDistance;
-    }
 
     public Rectangle(double[] centerPoint, double plugThickness, double sectionDistance, double angle) {
         this.centerPoint = centerPoint;
         this.plugThickness = plugThickness;
         this.sectionDistance = sectionDistance;
         this.angle = angle;
+    }
+
+    public Rectangle(double[] centerPoint, double plugThickness, double sectionDistance, double angle, String extrusionDirection) {
+        this.centerPoint = centerPoint;
+        this.plugThickness = plugThickness;
+        this.sectionDistance = sectionDistance;
+        this.angle = angle;
+        this.extrusionDirection = extrusionDirection;
     }
 
     //Plug Thickness is given initially in Y direction, rectangle spacing is given in X Direction.
@@ -54,7 +58,9 @@ public class Rectangle {
 
     public void createPlugRectangleCorners(){
 
+
         double[] point = new double[2];
+        /*
         //[x,y]
         //Top Right Corner
         point[0] = centerPoint[0] + sectionDistance;
@@ -75,6 +81,56 @@ public class Rectangle {
         point[0] = centerPoint[0] - sectionDistance;
         point[1] = centerPoint[1] + plugThickness;
         rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1] + plugThickness});
+        */
+
+        point[0] = centerPoint[0] + sectionDistance;
+        point[1] = centerPoint[1] + plugThickness;
+        rectangle.add(new double[]{centerPoint[0] + sectionDistance,centerPoint[1] + plugThickness/2});
+
+        //Bottom Right Corner
+        point[0] = centerPoint[0] + sectionDistance;
+        point[1] = centerPoint[1] - plugThickness;
+        rectangle.add(new double[]{centerPoint[0] + sectionDistance, centerPoint[1] - plugThickness/2});
+
+        //Bottom Left Corner
+        point[0] = centerPoint[0] - sectionDistance;
+        point[1] = centerPoint[1] - plugThickness;
+        rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1] - plugThickness/2});
+
+        //Top Left Corner
+        point[0] = centerPoint[0] - sectionDistance;
+        point[1] = centerPoint[1] + plugThickness;
+        rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1] + plugThickness/2});
+    }
+
+    public void createPlugShiftedRectangle(String extrusionDirection){
+        if (extrusionDirection == "negative"){
+            //Top Right Corner
+            rectangle.add(new double[]{centerPoint[0] + sectionDistance,centerPoint[1] + plugThickness});
+
+            //Bottom Right Corner
+            rectangle.add(new double[]{centerPoint[0] + sectionDistance, centerPoint[1]});
+
+            //Bottom Left Corner
+            rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1]});
+
+            //Top Left Corner
+            rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1] + plugThickness});
+
+        }
+        if (extrusionDirection == "positive"){
+            //Top Right Corner
+            rectangle.add(new double[]{centerPoint[0] + sectionDistance,centerPoint[1] - plugThickness});
+
+            //Bottom Right Corner
+            rectangle.add(new double[]{centerPoint[0] + sectionDistance, centerPoint[1]});
+
+            //Bottom Left Corner
+            rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1]});
+
+            //Top Left Corner
+            rectangle.add(new double[]{centerPoint[0] - sectionDistance, centerPoint[1] - plugThickness});
+        }
     }
 
     public List<double[]> getRectangle() {
@@ -83,6 +139,7 @@ public class Rectangle {
 
     public List<double[]> createRotatedRectangleCorners() {
         //Top Right Corner
+
 
         double[] point = new double[2];
         point[0] = centerPoint[0] + (Math.cos(angle) * (rectangle.get(0)[0] - centerPoint[0]) - Math.sin(angle) * (rectangle.get(0)[1] - centerPoint[1]));
@@ -106,6 +163,7 @@ public class Rectangle {
         point1[0] = centerPoint[0] + (Math.cos(angle) * (rectangle.get(1)[0] - centerPoint[0]) - Math.sin(angle) * (rectangle.get(1)[1] - centerPoint[1]));
         point1[1] = centerPoint[1] + (Math.sin(angle) * (rectangle.get(1)[0] - centerPoint[0]) + Math.cos(angle) * (rectangle.get(1)[1] - centerPoint[1]));
         rectangleRotated.add(point1);
+
         return rectangleRotated;
     }
 }

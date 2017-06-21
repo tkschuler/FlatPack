@@ -16,6 +16,7 @@ class UpdateShapes {
     double sectionDistance;
 
     double X1, X2, Y1, Y2;
+    String extrusionDirection;
 
     public UpdateShapes(String jointType, int numberOfTeeth, double plugThickness, double[][] connectingLine) {
         this.jointType = jointType;
@@ -33,6 +34,12 @@ class UpdateShapes {
             angle = 1.5708;
         else
             angle = Math.atan((Y2 - Y1) / (X2 - X1)); //+ Math.PI;
+
+        //Determines which direction to extrude the plugs on the main shape
+        if (Y2<Y1 || X2<X1)
+            extrusionDirection = "positive";
+        else
+            extrusionDirection = "negative";
     }
 
 
@@ -56,8 +63,16 @@ class UpdateShapes {
 
     public List<List<double[]>> updateReceptors() {
         squareToothSpacing();
-        Plugs r = new Plugs(numberOfTeeth, sectionDistance, distance, plugThickness, angle, X1, X2, Y1, Y2);
-        List<List<double[]>> rectangles = r.makePlugsForReceptors();
+        Receptors r = new Receptors(numberOfTeeth, sectionDistance, distance, plugThickness, angle, X1, X2, Y1, Y2);
+        List<List<double[]>> rectangles = r.makeReceptorHoles();
+
+        return rectangles;
+    }
+
+    public List<List<double[]>> updatePlugs() {
+        squareToothSpacing();
+        Plugs p = new Plugs(numberOfTeeth, sectionDistance, distance, plugThickness, angle, X1, X2, Y1, Y2, extrusionDirection);
+        List<List<double[]>> rectangles = p.makePlugsForReceptors();
 
         return rectangles;
     }

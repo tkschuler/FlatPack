@@ -40,10 +40,9 @@ public class UpdateBoards {
         //----------------------------------------------------------------------------------------------------------------------
         //Board Square 1 Information for Testing
         List<double[]> board1points = new ArrayList<>();
-        board1points.add(new double[]{0,0});
-        board1points.add(new double[]{500,0});
-        board1points.add(new double[]{500,500});
-        board1points.add(new double[]{0,500});
+        board1points.add(new double[]{250,500});
+        board1points.add(new double[]{500,67});
+        board1points.add(new double[]{0,67});
         Board square1 = new Board("Square1", 30, board1points);
 
         //----------------------------------------------------------------------------------------------------------------------
@@ -60,14 +59,17 @@ public class UpdateBoards {
         boards.add(square2);
 
         List<Joint> joints = new ArrayList<>();
-        Joint joint1 = new Joint("Square1", "Square2", null, new double[][]{{0,0},{500,500}}, new double[][]{{0,500},{250,67}});
+        Joint joint1 = new Joint("Square1", "Square2", null, new double[][]{{250,500},{500,67}}, new double[][]{{250,200},{400,400}});
+        //Joint joint1 = new Joint("Square1", "Square2", null, new double[][]{{0,0},{500,500}}, new double[][]{{0,500},{500,500}});
+        //Joint joint1 = new Joint("Square1", "Square2", null, new double[][]{{0,0},{500,500}}, new double[][]{{500,500},{250,67}});
+        //Joint joint1 = new Joint("Square1", "Square2", null, new double[][]{{0,0},{500,500}}, new double[][]{{250,67},{0,500}});
         joints.add(joint1);
 
         Furniture rightAngleTest = new Furniture("Right Angle Test", boards, joints);
         //----------------------------------------------------------------------------------------------------------------------
         //----------------------------------------------------------------------------------------------------------------------
+        //Determine holes for receptor
         List<List<double[]>> holes = new ArrayList<>();
-
         for (int i = 0; i < rightAngleTest.joints.size(); i++) {
             Joint j = rightAngleTest.joints.get(i);
             System.out.println(j);
@@ -77,19 +79,35 @@ public class UpdateBoards {
             //First Receptors holes
             UpdateShapes updatedJointShapes = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
             holes = updatedJointShapes.updateReceptors();
-
-            GsonBuilder builder = new GsonBuilder();
-            builder.setPrettyPrinting().serializeNulls();
-            Gson gson2 = builder.create();
-            System.out.println(gson2.toJson(rightAngleTest));
-
         }
 
+        List<List<double[]>> plugs = new ArrayList<>();
+        for (int i = 0; i < rightAngleTest.joints.size(); i++) {
+            Joint j = rightAngleTest.joints.get(i);
+            System.out.println(j);
+
+            //Extract infromation from Joint to create new shapes
+            //Joint Type, NumberOfTeeth, and PlugThickness will all be user input
+            //First Receptors holes
+            UpdateShapes updatedJointShapes = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.plugConnectingLine);
+            plugs = updatedJointShapes.updatePlugs();
+        }
+
+
+        //Update the boards from the above determined holes and plugs.
+        //-------------------------------------------------------------------
         //Update Receptors
         for (Board b : rightAngleTest.boards){
             if (b.getBoardName().equals(joint1.receptorName))
             b.setHoles(holes);
         }
+
+        //Update Receptors
+        for (Board b : rightAngleTest.boards){
+            if (b.getBoardName().equals(joint1.plugName))
+                b.setHoles(plugs);
+        }
+        //-------------------------------------------------------------------
 
         //System.out.println(rightAngleTest.boards.get(1).getHoles());
 
