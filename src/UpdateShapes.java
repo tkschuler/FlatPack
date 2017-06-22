@@ -11,12 +11,11 @@ class UpdateShapes {
 
     //Updated coordinates  (Should I make this Array or List?)
     double distance = 0;
+    double[] direction = new double[2];
     double jointSpacing = 0;
     double angle; //in radians
-    double sectionDistance;
 
     double X1, X2, Y1, Y2;
-    String extrusionDirection;
 
     public UpdateShapes(String jointType, int numberOfTeeth, double plugThickness, double[][] connectingLine) {
         this.jointType = jointType;
@@ -34,24 +33,18 @@ class UpdateShapes {
             angle = 1.5708;
         else
             angle = Math.atan((Y2 - Y1) / (X2 - X1)); //+ Math.PI;
-
-        //Determines which direction to extrude the plugs on the main shape
-        if (Y2<Y1 || X2<X1)
-            extrusionDirection = "positive";
-        else
-            extrusionDirection = "negative";
     }
-
 
     public void squareToothSpacing() {
         //Distance formula
 
         distance = Math.sqrt(Math.pow((X2 - X1), 2) + Math.pow((Y2 - Y1), 2));
+        direction[0] = (X2-X1)/distance;
+        direction[1] = (Y2-Y1)/distance;
 
         //Each Squaretooth joint has [(n*2)-1] sections to the joint
         double jointSpacing = distance / ((numberOfTeeth * 2) - 1);
     }
-
 
     //this method returns a rectangle in the correct orientation around a center point
     public void angleOfConnectingLine() {
@@ -63,18 +56,18 @@ class UpdateShapes {
 
     public List<List<double[]>> updateReceptors() {
         squareToothSpacing();
-        Receptors r = new Receptors(numberOfTeeth, sectionDistance, distance, plugThickness, angle, X1, X2, Y1, Y2);
+        Receptors r = new Receptors(numberOfTeeth, distance, plugThickness, angle, X1, X2, Y1, Y2);
         List<List<double[]>> rectangles = r.makeReceptorHoles();
 
         return rectangles;
     }
 
-    public List<List<double[]>> updatePlugs() {
+    public List<double[]> updatePlugs() {
         squareToothSpacing();
-        Plugs p = new Plugs(numberOfTeeth, sectionDistance, distance, plugThickness, angle, X1, X2, Y1, Y2, extrusionDirection);
-        List<List<double[]>> rectangles = p.makePlugsForReceptors();
+        Plugs p = new Plugs(numberOfTeeth, distance, plugThickness, angle, X1, X2, Y1, Y2, direction);
+        List<double[]> plugCoordinates = p.makeTeeth();
 
-        return rectangles;
+        return plugCoordinates;
     }
 
     public static void main(String[] args) {
@@ -82,9 +75,6 @@ class UpdateShapes {
         UpdateShapes joint1 = new UpdateShapes("hi", 3, 30.0, connectingLine);
         List<List<double[]>> returnedRectangles = joint1.updateReceptors();
         System.out.println("WAZZZZZUP");
-
-
-
     }
 }
 // double[][] connectingLine = new double[][]{{1,2},{5,7}}Line = new double[][]{{1,2},{5,7}}

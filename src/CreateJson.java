@@ -62,6 +62,27 @@ class Board{
     public void setHoles(List<List<double[]>> holes) {
         this.holes = holes;
     }
+
+    public void setPlugCoordinates(List<double[]> plugCoordinates){
+        int counter = 0;
+        //first find starting point of joing in main shape
+        for (double[] p : mainCoordinates) {
+            if (p[0] == plugCoordinates.get(0)[0] && p[1] == plugCoordinates.get(0)[1]) {
+                mainCoordinates.remove(counter);
+                break;
+            }
+            counter++;
+        }
+        //This removes duplicate points
+        plugCoordinates.remove(plugCoordinates.size()-1);
+
+        //Next add plug coordinates to main shape and remove starting coordinate of connecting line.  (otherwise there will be a line
+        //going through the base of the plugs, since SVG automatically connects the first and last points)
+        for (double[] point : plugCoordinates) {
+            mainCoordinates.add(counter, point);
+            counter++;
+        }
+    }
 }
 
 class Joint{
@@ -81,12 +102,9 @@ class Joint{
     }
 }
 
-
 public class CreateJson {
 
     public static void main(String[] args) {
-
-
         //----------------------------------------------------------------------------------------------------------------------
         //Board Square 1 Information for Testing
         List<double[]> board1points = new ArrayList<>();
@@ -116,10 +134,6 @@ public class CreateJson {
 
         Furniture rightAngleTest = new Furniture("Right Angle Test", boards, joints);
 
-
-
-
-
         Gson gson = new Gson();
         String jsonString = gson.toJson(rightAngleTest);
         System.out.println(jsonString);
@@ -132,7 +146,5 @@ public class CreateJson {
         builder.setPrettyPrinting().serializeNulls();
         Gson gson2 = builder.create();
         System.out.println(gson2.toJson(rightAngleTest));
-
-
     }
 }

@@ -36,7 +36,6 @@ public class UpdateBoards {
         jointType = "sawtooth";
         plugThickness = 50.0;
 
-
         //----------------------------------------------------------------------------------------------------------------------
         //Board Square 1 Information for Testing
         List<double[]> board1points = new ArrayList<>();
@@ -81,7 +80,8 @@ public class UpdateBoards {
             holes = updatedJointShapes.updateReceptors();
         }
 
-        List<List<double[]>> plugs = new ArrayList<>();
+        List<double[]> plugs = new ArrayList<>();
+
         for (int i = 0; i < rightAngleTest.joints.size(); i++) {
             Joint j = rightAngleTest.joints.get(i);
             System.out.println(j);
@@ -102,10 +102,11 @@ public class UpdateBoards {
             b.setHoles(holes);
         }
 
-        //Update Receptors
+        //Update Plugs
         for (Board b : rightAngleTest.boards){
-            if (b.getBoardName().equals(joint1.plugName))
-                b.setHoles(plugs);
+            if (b.getBoardName().equals(joint1.plugName)) {;
+                b.setPlugCoordinates(plugs);
+            }
         }
         //-------------------------------------------------------------------
 
@@ -121,8 +122,6 @@ public class UpdateBoards {
         builder.setPrettyPrinting().serializeNulls();
         Gson gson2 = builder.create();
         System.out.println(gson2.toJson(rightAngleTest));
-
-
 
         try {
             PrintWriter writer = new PrintWriter("/Users/tristanschuler/Desktop/FlatPack/out/files/gson_test.txt", "UTF-8");

@@ -14,9 +14,8 @@ public class Receptors {
     double angle;
     double X1, X2, Y1, Y2;
 
-    public Receptors(int numberOfTeeth, double sectionDistance, double distance, double plugThickness, double angle, double x1, double x2, double y1, double y2) {
+    public Receptors(int numberOfTeeth, double distance, double plugThickness, double angle, double x1, double x2, double y1, double y2) {
         this.numberOfTeeth = numberOfTeeth;
-        this.sectionDistance = sectionDistance;
         this.distance = distance;
         this.plugThickness = plugThickness;
         this.angle = angle;
