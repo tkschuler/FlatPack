@@ -1,4 +1,3 @@
-PRETTY JSON FILE:
 {
   "furnitureName": "Right Angle Test",
   "boards": [

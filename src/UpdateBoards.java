@@ -125,7 +125,7 @@ public class UpdateBoards {
 
         try {
             PrintWriter writer = new PrintWriter("/Users/tristanschuler/Desktop/FlatPack/out/files/gson_test.txt", "UTF-8");
-            writer.println("PRETTY JSON FILE:");
+            //writer.println("PRETTY JSON FILE:");
             writer.println(gson2.toJson(rightAngleTest));
             writer.close();
         } catch (IOException e) {
