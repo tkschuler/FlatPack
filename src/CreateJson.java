@@ -76,6 +76,7 @@ class Board{
     public void setPlugCoordinates(List<double[]> plugCoordinates){
         int counter = 0;
         //first find starting point of joing in main shape
+
         for (double[] p : mainCoordinates) {
             if (p[0] == plugCoordinates.get(0)[0] && p[1] == plugCoordinates.get(0)[1]) {
                 mainCoordinates.remove(counter);
@@ -83,9 +84,9 @@ class Board{
             }
             counter++;
         }
-        //This removes duplicate points
-        plugCoordinates.remove(plugCoordinates.size()-1);
 
+        //This removes duplicate points
+        //plugCoordinates.remove(plugCoordinates.size()-1);
         //Next add plug coordinates to main shape and remove starting coordinate of connecting line.  (otherwise there will be a line
         //going through the base of the plugs, since SVG automatically connects the first and last points)
         for (double[] point : plugCoordinates) {
@@ -133,7 +134,7 @@ public class CreateJson {
         Leg1Points.add(new double[]{0,300});
         Leg1Points.add(new double[]{200,300});
         Leg1Points.add(new double[]{200,0});
-        Board leg1 = new Board("leg1", 50, Leg1Points);
+        Board leg1 = new Board("Leg1", 50, Leg1Points);
 
         //Leg 2
         //Leg 1
@@ -151,8 +152,9 @@ public class CreateJson {
         boards.add(leg2);
 
         List<Joint> joints = new ArrayList<>();
+        //Plug Connecting Lines must also be in CCW direction or shape will not turn out correctly. 
         Joint joint1 = new Joint("Leg1", "TableTop", null, new double[][]{{200,0},{0,0}}, new double[][]{{100,50},{100,250}});
-        Joint joint2 = new Joint("Leg2", "TableTop", null, new double[][]{{0,0},{200,0}}, new double[][]{{600,50},{600,250}});
+        Joint joint2 = new Joint("Leg2", "TableTop", null, new double[][]{{200,0},{0,0}}, new double[][]{{600,50},{600,250}});
         joints.add(joint1);
         joints.add(joint2);
 

@@ -25,7 +25,7 @@
       "holes": []
     },
     {
-      "boardName": "leg1",
+      "boardName": "Leg1",
       "thickness": 50.0,
       "mainCoordinates": [
         [
@@ -103,11 +103,11 @@
       "jointType": null,
       "plugConnectingLine": [
         [
-          0.0,
+          200.0,
           0.0
         ],
         [
-          200.0,
+          0.0,
           0.0
         ]
       ],
