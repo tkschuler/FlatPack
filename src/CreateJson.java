@@ -137,7 +137,6 @@ public class CreateJson {
         Board leg1 = new Board("Leg1", 50, Leg1Points);
 
         //Leg 2
-        //Leg 1
         List<double[]> Leg2Points = new ArrayList<>();
         Leg2Points.add(new double[]{0,0});
         Leg2Points.add(new double[]{0,300});
@@ -152,7 +151,7 @@ public class CreateJson {
         boards.add(leg2);
 
         List<Joint> joints = new ArrayList<>();
-        //Plug Connecting Lines must also be in CCW direction or shape will not turn out correctly. 
+        //Plug Connecting Lines must also be in CCW direction or shape will not turn out correctly.
         Joint joint1 = new Joint("Leg1", "TableTop", null, new double[][]{{200,0},{0,0}}, new double[][]{{100,50},{100,250}});
         Joint joint2 = new Joint("Leg2", "TableTop", null, new double[][]{{200,0},{0,0}}, new double[][]{{600,50},{600,250}});
         joints.add(joint1);

@@ -3,7 +3,8 @@ FlatPack Furniture Assumptions:
 Boards:
 -Main Coordinates come in counter-clockwise order
 	-Plug connecting lines will originally be included on main shape (Redundancy)
--Hole come in clockwise order
+-Hole comes in clockwise order
+-Joint connecting lines must also be given in CCW orientation
 
 Imported JSON data for Joints includes:
 -plug name, plug connecting line

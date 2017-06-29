@@ -5,13 +5,6 @@ import java.util.List;
 //This class can be called to export several SVG files form the imported furniture
 //item and it's corresponding boards.
 public class exportSVG {
-    Furniture item;
-
-    /*public exportSVG(Furniture item) {
-        this.item = item;
-    }
-    */
-
     public String mainShapeLine(List<double[]> coords) {
         String line = "\t <path d=\"M";
         for (double[] point : coords) {
@@ -38,20 +31,12 @@ public class exportSVG {
             }
             line += "Z\" fill=\"none\" stroke=\"green\" stroke-width=\"1\"/>" + "\n";
         }
-
-
-
         return line;
     }
-
-
-
 
     public void createSVGFile(Furniture f) {
         List<Board> boards = f.getBoards();
         int counter = 1;
-
-
         for (Board b : boards) {
             try {
                 PrintWriter writer = new PrintWriter("/Users/tristanschuler/Desktop/FlatPack/out/files/test_" + b.getBoardName() + ".svg", "UTF-8");
@@ -67,13 +52,10 @@ public class exportSVG {
                     writer.println(line2);
                 }
 
-
                 writer.println("</svg>");
                 writer.close();
             } catch (IOException e) {
-                // do something
             }
-
             counter +=1;
         }
     }
@@ -81,7 +63,6 @@ public class exportSVG {
     public void createUpdatedSVGFile(Furniture f) {
         List<Board> boards = f.getBoards();
         int counter = 1;
-
 
         for (Board b : boards) {
             try {
@@ -98,13 +79,10 @@ public class exportSVG {
                     writer.println(line2);
                 }
 
-
                 writer.println("</svg>");
                 writer.close();
             } catch (IOException e) {
-                // do something
             }
-
             counter +=1;
         }
     }
