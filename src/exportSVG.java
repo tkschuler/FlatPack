@@ -54,8 +54,8 @@ public class exportSVG {
 
         for (Board b : boards) {
             try {
-                PrintWriter writer = new PrintWriter("/Users/tristanschuler/Desktop/FlatPack/out/files/board-" + counter + ".txt", "UTF-8");
-                writer.println("<svg height=\"600\" width=\"600\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">");
+                PrintWriter writer = new PrintWriter("/Users/tristanschuler/Desktop/FlatPack/out/files/test_" + b.getBoardName() + ".svg", "UTF-8");
+                writer.println("<svg height=\"1000\" width=\"1000\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">");
                 List<double[]> mainCoordinates = b.getCoordinates();
                 List<List<double[]>> holes = b.getHoles();
 
@@ -76,7 +76,36 @@ public class exportSVG {
 
             counter +=1;
         }
+    }
+
+    public void createUpdatedSVGFile(Furniture f) {
+        List<Board> boards = f.getBoards();
+        int counter = 1;
 
 
+        for (Board b : boards) {
+            try {
+                PrintWriter writer = new PrintWriter("/Users/tristanschuler/Desktop/FlatPack/out/files/updated_" + b.getBoardName() + ".svg", "UTF-8");
+                writer.println("<svg height=\"1000\" width=\"1000\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-100 -100 1000 1000\">");
+                List<double[]> mainCoordinates = b.getCoordinates();
+                List<List<double[]>> holes = b.getHoles();
+
+                String line = mainShapeLine(mainCoordinates);
+                writer.println(line);
+
+                if (holes != null) {
+                    String line2 = holesLine(holes);
+                    writer.println(line2);
+                }
+
+
+                writer.println("</svg>");
+                writer.close();
+            } catch (IOException e) {
+                // do something
+            }
+
+            counter +=1;
+        }
     }
 }

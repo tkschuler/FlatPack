@@ -1,5 +1,8 @@
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +41,7 @@ class Board{
     //Coordinates will be a list of list of coordinates, to allow addition of holes.
     //i.e. { { [0,0],[0,50],[50,50],[50,0] } , { [10,10],[10,20] } , { [10,40],[10,30] } }
     private List<double[]> mainCoordinates;
-    private List<List<double[]>> holes;
+    List<List<double[]>> holes = new ArrayList<>();
 
 
     public Board(String boardName, double thickness, List<double[]> coordinates) {
@@ -59,8 +62,15 @@ class Board{
         return holes;
     }
 
-    public void setHoles(List<List<double[]>> holes) {
-        this.holes = holes;
+    public void setHoles(List<List<double[]>> newHoles) {
+
+        if (holes == null)
+            holes = newHoles;
+        else {
+            for (List<double[]> l : newHoles) {
+                holes.add(l);
+            }
+        }
     }
 
     public void setPlugCoordinates(List<double[]> plugCoordinates){
@@ -105,46 +115,66 @@ class Joint{
 public class CreateJson {
 
     public static void main(String[] args) {
+        //Manually Testing a Table with two legs
         //----------------------------------------------------------------------------------------------------------------------
-        //Board Square 1 Information for Testing
-        List<double[]> board1points = new ArrayList<>();
-        board1points.add(new double[]{0,0});
-        board1points.add(new double[]{0,50});
-        board1points.add(new double[]{50,50});
-        board1points.add(new double[]{50,0});
-        Board square1 = new Board("Square1", 1, board1points);
+        //Main shapes follow counterclockwise orientation
+        //Table Top 300x700 units
+        List<double[]> TTPoints = new ArrayList<>();
+        TTPoints.add(new double[]{0,0});
+        TTPoints.add(new double[]{0,300});
+        TTPoints.add(new double[]{700,300});
+        TTPoints.add(new double[]{700,0});
+        Board tableTop = new Board("TableTop", 50, TTPoints);
 
         //----------------------------------------------------------------------------------------------------------------------
-        //Board Square 2 Information for Testing
-        List<double[]> board2points = new ArrayList<>();
-        board2points.add(new double[]{0,0});
-        board2points.add(new double[]{0,50});
-        board2points.add(new double[]{50,50});
-        board2points.add(new double[]{50,0});
-        Board square2 = new Board("Square2", 1, board2points);
+        //Leg 1
+        List<double[]> Leg1Points = new ArrayList<>();
+        Leg1Points.add(new double[]{0,0});
+        Leg1Points.add(new double[]{0,300});
+        Leg1Points.add(new double[]{200,300});
+        Leg1Points.add(new double[]{200,0});
+        Board leg1 = new Board("leg1", 50, Leg1Points);
+
+        //Leg 2
+        //Leg 1
+        List<double[]> Leg2Points = new ArrayList<>();
+        Leg2Points.add(new double[]{0,0});
+        Leg2Points.add(new double[]{0,300});
+        Leg2Points.add(new double[]{200,300});
+        Leg2Points.add(new double[]{200,0});
+        Board leg2 = new Board("Leg2", 50, Leg2Points);
 
         //----------------------------------------------------------------------------------------------------------------------
         List<Board> boards = new ArrayList<>();
-        boards.add(square1);
-        boards.add(square2);
+        boards.add(tableTop);
+        boards.add(leg1);
+        boards.add(leg2);
 
         List<Joint> joints = new ArrayList<>();
-        Joint joint1 = new Joint("Square1", "Square2", null, new double[][]{{0,0},{50,50}}, new double[][]{{0,0},{50,50}});
+        Joint joint1 = new Joint("Leg1", "TableTop", null, new double[][]{{200,0},{0,0}}, new double[][]{{100,50},{100,250}});
+        Joint joint2 = new Joint("Leg2", "TableTop", null, new double[][]{{0,0},{200,0}}, new double[][]{{600,50},{600,250}});
         joints.add(joint1);
+        joints.add(joint2);
 
-        Furniture rightAngleTest = new Furniture("Right Angle Test", boards, joints);
+        Furniture tableTest = new Furniture("Table Test", boards, joints);
+        exportSVG test = new exportSVG();
+        test.createSVGFile(tableTest);
 
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(rightAngleTest);
-        System.out.println(jsonString);
-
-        System.out.println("\n");
-
+        //System.out.println("\n");
         System.out.println((char)27 + "[35mPRETTY JSON FILE:" + (char)27 + "[30m"); //ANSI Code to Format output Color
 
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting().serializeNulls();
         Gson gson2 = builder.create();
-        System.out.println(gson2.toJson(rightAngleTest));
+        System.out.println(gson2.toJson(tableTest));
+
+        try {
+            PrintWriter writer = new PrintWriter("/Users/tristanschuler/Desktop/FlatPack/out/files/tabletest.txt", "UTF-8");
+            //writer.println("PRETTY JSON FILE:");
+            writer.println(gson2.toJson(tableTest));
+            writer.close();
+        } catch (IOException e) {
+            // do something
+        }
     }
 }

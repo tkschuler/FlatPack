@@ -1,0 +1,126 @@
+{
+  "furnitureName": "Table Test",
+  "boards": [
+    {
+      "boardName": "TableTop",
+      "thickness": 50.0,
+      "mainCoordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          300.0
+        ],
+        [
+          700.0,
+          300.0
+        ],
+        [
+          700.0,
+          0.0
+        ]
+      ],
+      "holes": []
+    },
+    {
+      "boardName": "leg1",
+      "thickness": 50.0,
+      "mainCoordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          300.0
+        ],
+        [
+          200.0,
+          300.0
+        ],
+        [
+          200.0,
+          0.0
+        ]
+      ],
+      "holes": []
+    },
+    {
+      "boardName": "Leg2",
+      "thickness": 50.0,
+      "mainCoordinates": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          300.0
+        ],
+        [
+          200.0,
+          300.0
+        ],
+        [
+          200.0,
+          0.0
+        ]
+      ],
+      "holes": []
+    }
+  ],
+  "joints": [
+    {
+      "plugName": "Leg1",
+      "receptorName": "TableTop",
+      "jointType": null,
+      "plugConnectingLine": [
+        [
+          200.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "receptorConnectingLine": [
+        [
+          100.0,
+          50.0
+        ],
+        [
+          100.0,
+          250.0
+        ]
+      ]
+    },
+    {
+      "plugName": "Leg2",
+      "receptorName": "TableTop",
+      "jointType": null,
+      "plugConnectingLine": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          200.0,
+          0.0
+        ]
+      ],
+      "receptorConnectingLine": [
+        [
+          600.0,
+          50.0
+        ],
+        [
+          600.0,
+          250.0
+        ]
+      ]
+    }
+  ]
+}
