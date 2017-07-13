@@ -96,7 +96,7 @@ public class Plugs {
                 }
             }
             //Move over plug distance if not final point
-            if (i != 2){
+            if (i != numberOfTeeth-1){
                 double[] tempPoint = new double[2];
 
                 tempPoint[0] = point[0] + direction[0] * toothDistance;

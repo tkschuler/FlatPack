@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Scanner;
 
 //Right now this Class only handles creating squaretooth joints, for both plugs and receptors, depending on the String Type
 //that is passed in. The class will return updated joint coordinates;
@@ -8,6 +9,7 @@ class UpdateShapes {
     private int numberOfTeeth;
     private double plugThickness;  //This is the plugs board thickness, determines width of receptor holes
     public double[][] connectingLine;
+    boolean hiddenJoint = false;
 
     //Updated coordinates  (Should I make this Array or List?)
     double distance = 0;
@@ -63,6 +65,23 @@ class UpdateShapes {
     }
 
     public List<double[]> updatePlugs() {
+        Scanner s = new Scanner(System.in);
+        System.out.println("Would you like to make this a hidden joint? [y/n]");
+        if (s.next().equals("y"))
+            hiddenJoint = true;
+
+        double hiddenJointPercent = 1;
+
+        if (hiddenJoint == true) {
+            Scanner s1 = new Scanner(System.in);
+            System.out.println("What percent do you want hidden? [Enter in decimal format, i.e. 40% = .40]");
+            hiddenJointPercent = s.nextDouble();
+        }
+
+        if (hiddenJoint == true){
+            plugThickness = plugThickness * hiddenJointPercent;
+        }
+
         squareToothSpacing();
         Plugs p = new Plugs(numberOfTeeth, distance, plugThickness, angle, X1, X2, Y1, Y2, direction);
         List<double[]> plugCoordinates = p.makeTeeth();
