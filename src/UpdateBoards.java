@@ -20,7 +20,7 @@ public class UpdateBoards {
         this.item = item;
     }
 
-    public void UpdateBoards() throws IOException{
+    public void UpdateBoards() throws IOException {
         DeserializeJSON d = new DeserializeJSON();
         d.deserializeJSON();
         Furniture item = d.deserializeJSON();
@@ -42,7 +42,7 @@ public class UpdateBoards {
             holes = updatedJointShapes.updateReceptors();
 
             //searches for correct board updates receptors
-            for (Board b : item.boards){
+            for (Board b : item.boards) {
                 if (b.getBoardName().equals(j.receptorName))
                     b.setHoles(holes);
             }
@@ -59,8 +59,9 @@ public class UpdateBoards {
             plugs = updatedJointShapes.updatePlugs();
 
             //searches for correct board updates plugs
-            for (Board b : item.boards){
-                if (b.getBoardName().equals(j.plugName)) {;
+            for (Board b : item.boards) {
+                if (b.getBoardName().equals(j.plugName)) {
+                    ;
                     b.setPlugCoordinates(plugs);
                 }
             }
@@ -82,50 +83,77 @@ public class UpdateBoards {
         exportSVG test = new exportSVG();
         test.createUpdatedSVGFile(item);
     }
+
+
+
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException {
         DeserializeJSON d = new DeserializeJSON();
         Furniture item = d.deserializeJSON();
 
-        Scanner s = new Scanner(System.in);
-        System.out.println("What type of joint will this furniture item use? (Squaretooth, Right Angle Squaretooth)");
-        jointType = s.next();
-        //s.close();
 
-        Scanner s2 = new Scanner(System.in);
-        System.out.println("How many teeth for the joints?");
-        numberOfTeeth = s2.nextInt();
-        //s2.close();
-
-        Scanner s1 = new Scanner(System.in);
-        System.out.println("What is the board thickness? [Enter in 0.0 format]");
-        plugThickness = s1.nextDouble();
-        //s1.close();
-
-        System.out.println("Joint Type: " + jointType);
-        System.out.println("Hidden: " + hiddenJoint);
-        System.out.println("Number of Teeth: " + numberOfTeeth);
-        System.out.println("Board Thickness: " + plugThickness);
-
+        System.out.println("Please individually select specs for each joint in \"" + item.getFurnitureName() + "\"");
 
         //testing for now
         //numberOfTeeth = 3;
         //jointType = "squaretooth";
         //plugThickness = 50.0;
 
-        ///Users/tristanschuler/Desktop/FlatPack/out/files/tabletest.txt
-        if (jointType.equals("Squaretooth")) {
-            for (int i = 0; i < item.joints.size(); i++) {
-                List<List<double[]>> holes;
-                Joint j = item.joints.get(i);
-                //System.out.println(j);
 
+/*
+        //Check if Edge joint is possible
+        if (jointType.equals("Edge Squaretooth")) {
+            for (int n = 0; n < item.joints.size(); n++) {
+                Joint j = item.joints.get(n);
+                for (Board b : item.boards) {
+                    if (b.getBoardName().equals(j.receptorName)) {
+            }
+
+
+        }
+        */
+
+
+        ///Users/tristanschuler/Desktop/FlatPack/out/files/tableedgetest.txt
+        ///Users/tristanschuler/Desktop/FlatPack/out/files/tabletest.txt
+
+        for (int i = 0; i < item.joints.size(); i++) {
+            Joint j = item.joints.get(i);
+            System.out.println(j.toString() + "\n");
+
+            boolean checkCoincidence = j.checkCoincidence(j.plugConnectingLine[0], j.plugConnectingLine[1], j.receptorConnectingLine[0],j.receptorConnectingLine[1]);
+
+            if (checkCoincidence == true)
+                    System.out.println("Lines coincide.");
+            else
+                System.out.println("Not coincident.");
+
+
+            //Get joint specifications from the user for each individual joint.
+            Scanner s = new Scanner(System.in);
+            System.out.println("What type of joint will this furniture item use? (Squaretooth, Edge_Squaretooth)");
+            jointType = s.next();
+            //s.close();
+
+            Scanner s2 = new Scanner(System.in);
+            System.out.println("How many teeth for the joints?");
+            numberOfTeeth = s2.nextInt();
+            //s2.close();
+
+            Scanner s1 = new Scanner(System.in);
+            System.out.println("What is the board thickness? [Enter in 0.0 format]");
+            plugThickness = s1.nextDouble();
+            //s1.close();
+
+
+            if (jointType.equals("Squaretooth")) {
+                List<List<double[]>> holes;
                 //Extract information from Joint to create new shapes
                 //Joint Type, NumberOfTeeth, and PlugThickness will all be user input
                 //First Receptors holes
-                UpdateShapes updatedJointShapes = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
-                holes = updatedJointShapes.updateReceptors();
+                UpdateShapes updatedJointShapesReceptors = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
+                holes = updatedJointShapesReceptors.updateReceptors();
 
                 //searches for correct board updates receptors
                 for (Board b : item.boards) {
@@ -134,17 +162,10 @@ public class UpdateBoards {
                         break;
                     }
                 }
-            }
 
-            for (int i = 0; i < item.joints.size(); i++) {
                 List<double[]> plugs;
-                Joint j = item.joints.get(i);
-                //System.out.println(j);
-
-                //Extract infromation from Joint to create new shapes
-                //Joint Type, NumberOfTeeth, and PlugThickness will all be user input
-                UpdateShapes updatedJointShapes = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.plugConnectingLine);
-                plugs = updatedJointShapes.updatePlugs();
+                UpdateShapes updatedJointShapesPlugs = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.plugConnectingLine);
+                plugs = updatedJointShapesPlugs.updatePlugs();
 
                 //searches for correct board & updates plugs
                 for (Board b : item.boards) {
@@ -154,7 +175,15 @@ public class UpdateBoards {
                     }
                 }
             }
+            else if (jointType.equals("Edge_Squaretooth")){
+                System.out.println("You chose Edge Squaretooth");
+            }
+
+            else
+                System.out.println("That is not a joint type.");
+
         }
+
 
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting().serializeNulls();

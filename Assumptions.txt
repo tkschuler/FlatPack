@@ -5,6 +5,7 @@ Boards:
 	-Plug connecting lines will originally be included on main shape (Redundancy)
 -Hole comes in clockwise order
 -Joint connecting lines must also be given in CCW orientation
+-Joint connecting Lines will always be same distance 
 
 Imported JSON data for Joints includes:
 -plug name, plug connecting line
@@ -13,3 +14,7 @@ Imported JSON data for Joints includes:
 
 
 For now all joints are in 2D
+
+Joints:
+-Right now individual joints can be hidden. This might be changed to all or nothing
+-Edge Joints must have same distance connecting line and be on edge of main shape
