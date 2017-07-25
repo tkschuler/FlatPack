@@ -91,6 +91,7 @@ public class UpdateBoards {
     public static void main(String[] args) throws IOException {
         DeserializeJSON d = new DeserializeJSON();
         Furniture item = d.deserializeJSON();
+        item.determineJointType();
 
 
         System.out.println("Please individually select specs for each joint in \"" + item.getFurnitureName() + "\"");
@@ -122,12 +123,6 @@ public class UpdateBoards {
             Joint j = item.joints.get(i);
             System.out.println(j.toString() + "\n");
 
-            boolean checkCoincidence = j.checkCoincidence(j.plugConnectingLine[0], j.plugConnectingLine[1], j.receptorConnectingLine[0],j.receptorConnectingLine[1]);
-
-            if (checkCoincidence == true)
-                    System.out.println("Lines coincide.");
-            else
-                System.out.println("Not coincident.");
 
 
             //Get joint specifications from the user for each individual joint.

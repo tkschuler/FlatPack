@@ -39,7 +39,105 @@ class Furniture{
     }
 
     public void determineJointType(){
-        
+        for (Joint j: joints){
+            List<double[]> b1coords = new ArrayList<>();
+            List<double[]> b2coords = new ArrayList<>();
+
+            for (Board b : boards) {
+                if (j.getPlugName().equals(b.getBoardName())) {
+                    b1coords = b.getCoordinates();
+                }
+                if (j.getReceptorName().equals(b.getBoardName())) {
+                    b2coords = b.getCoordinates();
+                }
+            }
+
+            boolean b1coincidence = false;
+            boolean b2coincidence = false;
+
+            for (int i = 0; i< b1coords.size(); i++){
+                if (i == 0){
+                    b1coincidence = checkCoincidence(b1coords.get(b1coords.size()-1), b1coords.get(i), j.plugConnectingLine[0], j.plugConnectingLine[1]);
+                }
+                else {
+                    b1coincidence = checkCoincidence(b1coords.get(i-1), b1coords.get(i), j.plugConnectingLine[0], j.plugConnectingLine[1]);
+                }
+
+                if (b1coincidence == true)
+                    break;
+
+            }
+
+            /*
+            if (b1coincidence == true)
+                System.out.println("Plug lines coincide.");
+            else
+                System.out.println("Plugs Not coincident.");
+                */
+
+            for (int i = 0; i< b2coords.size(); i++){
+                if (i == 0){
+                    b2coincidence = checkCoincidence(b2coords.get(b2coords.size()-1), b2coords.get(i), j.receptorConnectingLine[0], j.receptorConnectingLine[1]);
+                }
+                else {
+                    b2coincidence = checkCoincidence(b2coords.get(i-1), b2coords.get(i), j.receptorConnectingLine[0], j.receptorConnectingLine[1]);
+                }
+
+                if (b2coincidence == true)
+                    break;
+
+            }
+
+            /*
+            if (b2coincidence == true)
+                System.out.println("Receptor lines coincide.");
+            else
+                System.out.println("Receptor Not coincident.");
+                */
+
+            if (b1coincidence == true && b2coincidence == true){
+                j.setJointCategory("Edge");
+            }
+            else
+                j.setJointCategory("notEdge");
+
+
+        }
+    }
+
+    public boolean checkCoincidence(double[] boardPoint1, double[] boardPoint2, double[] connectingLine1, double[] connectingLine2) {
+
+        double angle1 = Math.abs(Math.atan((boardPoint2[1] - boardPoint1[1]) / (boardPoint2[0] - boardPoint1[0])));
+        double angle2 = Math.abs(Math.atan((connectingLine2[1] - connectingLine1[1]) / (connectingLine2[0] - connectingLine1[0])));
+
+        if (angle1 != angle2)
+            return false;
+
+        double maxX;
+        double minX;
+        double maxY;
+        double minY;
+
+        if (boardPoint1[0] > boardPoint2[0]) {
+            maxX = boardPoint1[0];
+            minX = boardPoint2[0];
+        } else {
+            maxX = boardPoint2[0];
+            minX = boardPoint1[0];
+        }
+
+        if (boardPoint1[1] > boardPoint2[1]) {
+            maxY = boardPoint1[1];
+            minY = boardPoint2[1];
+        } else {
+            maxY = boardPoint2[1];
+            minY = boardPoint1[1];
+        }
+
+        if (connectingLine1[0] >= minX && connectingLine1[0] <= maxX && connectingLine1[1] >= minY && connectingLine1[1] <= maxY && connectingLine2[0] >= minX && connectingLine2[0] <= maxX && connectingLine2[1] >= minY && connectingLine2[1] <= maxY)
+            return true;
+
+        return false;
     }
 }
 
@@ -107,57 +205,34 @@ class Board{
 class Joint{
     String plugName;
     String receptorName;
-    String jointType;
+    String jointCategory;
 
     double[][] plugConnectingLine;
     double[][] receptorConnectingLine;
 
-    public Joint(String plugName, String receptorName, String jointType, double[][] plugConnectingLine, double[][] receptorConnectingLine) {
+    public Joint(String plugName, String receptorName, String jointCategory, double[][] plugConnectingLine, double[][] receptorConnectingLine) {
         this.plugName = plugName;
         this.receptorName = receptorName;
-        this.jointType = jointType;
+        this.jointCategory = jointCategory;
         this.plugConnectingLine = plugConnectingLine;
         this.receptorConnectingLine = receptorConnectingLine;
     }
 
-    public boolean checkCoincidence(double[] boardPoint1, double[] boardPoint2, double[] connectingLine1, double[] connectingLine2) {
+    public String getPlugName() {
+        return plugName;
+    }
 
-        double angle1 = Math.atan((boardPoint2[1] - boardPoint1[1]) / (boardPoint2[0] - boardPoint1[0]));
-        double angle2 = Math.atan((connectingLine2[1] - connectingLine1[1]) / (connectingLine2[0] - connectingLine1[0]));
+    public String getReceptorName() {
+        return receptorName;
+    }
 
-        if (angle1 != angle2)
-            return false;
-
-        double maxX;
-        double minX;
-        double maxY;
-        double minY;
-
-        if (boardPoint1[0] > boardPoint2[0]) {
-            maxX = boardPoint1[0];
-            minX = boardPoint2[0];
-        } else {
-            maxX = boardPoint2[0];
-            minX = boardPoint1[0];
-        }
-
-        if (boardPoint1[1] > boardPoint2[1]) {
-            maxY = boardPoint1[1];
-            minY = boardPoint2[1];
-        } else {
-            maxY = boardPoint2[1];
-            minY = boardPoint1[1];
-        }
-
-        if (connectingLine1[0] > minX && connectingLine1[0] < maxX && connectingLine1[1] > minY && connectingLine1[1] < maxY && connectingLine2[0] > minX && connectingLine2[0] < maxX && connectingLine2[1] > minY && connectingLine2[1] < maxY)
-            return true;
-
-        return false;
+    public void setJointCategory(String jointCategory) {
+        this.jointCategory = jointCategory;
     }
 
     public String toString(){
         String jointToString = "";
-        jointToString += "Plug Name: " + plugName + "\n" + "Receptor Name: " + receptorName + "\n" + "Joint Type: " + jointType +"\n";
+        jointToString += "Plug Name: " + plugName + "\n" + "Receptor Name: " + receptorName + "\n" + "Joint Category: " + jointCategory +"\n";
         jointToString += "Plug Connecting Line: (" + plugConnectingLine[0][0] + "," + plugConnectingLine[0][1] + "),("
                 + plugConnectingLine[1][0] + "," + plugConnectingLine[1][1] + ") \n";
         jointToString += "Receptor Connecting Line: (" + receptorConnectingLine[0][0] + "," + receptorConnectingLine[0][1] + "),("
