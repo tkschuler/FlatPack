@@ -124,59 +124,121 @@ public class UpdateBoards {
             System.out.println(j.toString() + "\n");
 
 
+            if (j.jointCategory.equals("notEdge")) {
+                //Get joint specifications from the user for each individual joint.
+                Scanner s = new Scanner(System.in);
+                System.out.println("What type of joint will this furniture item use? (Squaretooth, Dove Tail, Other)");
+                jointType = s.next();
+                //s.close();
 
-            //Get joint specifications from the user for each individual joint.
-            Scanner s = new Scanner(System.in);
-            System.out.println("What type of joint will this furniture item use? (Squaretooth, Edge_Squaretooth)");
-            jointType = s.next();
-            //s.close();
+                Scanner s2 = new Scanner(System.in);
+                System.out.println("How many teeth for the joints?");
+                numberOfTeeth = s2.nextInt();
+                //s2.close();
 
-            Scanner s2 = new Scanner(System.in);
-            System.out.println("How many teeth for the joints?");
-            numberOfTeeth = s2.nextInt();
-            //s2.close();
-
-            Scanner s1 = new Scanner(System.in);
-            System.out.println("What is the board thickness? [Enter in 0.0 format]");
-            plugThickness = s1.nextDouble();
-            //s1.close();
+                Scanner s1 = new Scanner(System.in);
+                System.out.println("What is the board thickness? [Enter in 0.0 format]");
+                plugThickness = s1.nextDouble();
+                //s1.close();
 
 
-            if (jointType.equals("Squaretooth")) {
-                List<List<double[]>> holes;
-                //Extract information from Joint to create new shapes
-                //Joint Type, NumberOfTeeth, and PlugThickness will all be user input
-                //First Receptors holes
-                UpdateShapes updatedJointShapesReceptors = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
-                holes = updatedJointShapesReceptors.updateReceptors();
+                if (jointType.equals("Squaretooth")) {
+                    List<List<double[]>> holes;
+                    //Extract information from Joint to create new shapes
+                    //Joint Type, NumberOfTeeth, and PlugThickness will all be user input
+                    //First Receptors holes
+                    UpdateShapes updatedJointShapesReceptors = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
+                    holes = updatedJointShapesReceptors.updateReceptors();
 
-                //searches for correct board updates receptors
-                for (Board b : item.boards) {
-                    if (b.getBoardName().equals(j.receptorName)) {
-                        b.setHoles(holes);
-                        break;
+                    //searches for correct board updates receptors
+                    for (Board b : item.boards) {
+                        if (b.getBoardName().equals(j.receptorName)) {
+                            b.setHoles(holes);
+                            break;
+                        }
                     }
-                }
 
-                List<double[]> plugs;
-                UpdateShapes updatedJointShapesPlugs = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.plugConnectingLine);
-                plugs = updatedJointShapesPlugs.updatePlugs();
+                    List<double[]> plugs;
+                    UpdateShapes updatedJointShapesPlugs = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.plugConnectingLine);
+                    plugs = updatedJointShapesPlugs.updatePlugs();
 
-                //searches for correct board & updates plugs
-                for (Board b : item.boards) {
-                    if (b.getBoardName().equals(j.plugName)) {
-                        b.setPlugCoordinates(plugs);
-                        break;
+                    //searches for correct board & updates plugs
+                    for (Board b : item.boards) {
+                        if (b.getBoardName().equals(j.plugName)) {
+                            b.setPlugCoordinates(plugs);
+                            break;
+                        }
+                    }
+                } else if (jointType.equals("Edge_Squaretooth")) {
+                    System.out.println("You chose Edge Squaretooth");
+                } else
+                    System.out.println("That is not a joint type.");
+
+            }
+
+            if (j.jointCategory.equals("Edge")) {
+                Scanner s = new Scanner(System.in);
+                System.out.println("What type of joint will this furniture item use? (Edge_Squaretooth, Edge_Dovetail, Future Edge Joints...)");
+                jointType = s.next();
+                //s.close();
+
+                Scanner s2 = new Scanner(System.in);
+                System.out.println("How many teeth for the joints?");
+                numberOfTeeth = s2.nextInt();
+                //s2.close();
+
+                Scanner s1 = new Scanner(System.in);
+                System.out.println("What is the board thickness? [Enter in 0.0 format]");
+                plugThickness = s1.nextDouble();
+                //s1.close();
+
+
+                Scanner s3 = new Scanner(System.in);
+                System.out.println("Which is the main board? 1) " + j.getPlugName() + " or 2) " + j.getReceptorName() + "? [Type number]");
+                int mainboard = s3.nextInt();
+
+                if (jointType.equals("Edge_Squaretooth")) {
+                    List<double[]> mainPlugs;
+                    List<double[]> negativePlugs;
+
+                    if (mainboard == 1) {
+                        UpdateShapes updatedJointShapesPlugs = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.plugConnectingLine);
+                        mainPlugs = updatedJointShapesPlugs.updatePlugs();
+
+                        UpdateShapes updatedJointShapesNegativePlugs = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
+                        negativePlugs = updatedJointShapesNegativePlugs.updateNegativePlugs();
+
+                    }
+                    else {
+                        UpdateShapes updatedJointShapesReceptors = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.receptorConnectingLine);
+                        mainPlugs = updatedJointShapesReceptors.updatePlugs();
+
+                        UpdateShapes updatedJointShapesNegativePlugs = new UpdateShapes(jointType, numberOfTeeth, plugThickness, j.plugConnectingLine);
+                        negativePlugs = updatedJointShapesNegativePlugs.updateNegativePlugs();
+                    }
+
+                    //searches for correct board & updates plugs
+                    for (Board b : item.boards) {
+                        if (mainboard == 1) {
+                            if (b.getBoardName().equals(j.getPlugName())) {
+                                b.setPlugCoordinates(mainPlugs);
+                            }
+
+                            if (b.getBoardName().equals(j.getReceptorName())) {
+                                b.setPlugCoordinates(negativePlugs);
+                            }
+                        }
+                        else {
+                            if (b.getBoardName().equals(j.getReceptorName())) {
+                                b.setPlugCoordinates(mainPlugs);
+                            }
+                            if (b.getBoardName().equals(j.getPlugName())) {
+                                b.setPlugCoordinates(negativePlugs);
+                            }
+                        }
                     }
                 }
             }
-            else if (jointType.equals("Edge_Squaretooth")){
-                System.out.println("You chose Edge Squaretooth");
-            }
-
-            else
-                System.out.println("That is not a joint type.");
-
         }
 
 

@@ -314,10 +314,15 @@ public class CreateJson {
         //----------------------------------------------------------------------------------------------------------------------
         //Main shapes follow counterclockwise orientation
         //Table Top 300x700 units
+        //Remember, for edge joints, connecting lines must also be included on main shape if smaller than a whole edge
         List<double[]> TTPoints = new ArrayList<>();
         TTPoints.add(new double[]{0,0});
+        TTPoints.add(new double[]{0,50});
+        TTPoints.add(new double[]{0,250});
         TTPoints.add(new double[]{0,300});
         TTPoints.add(new double[]{700,300});
+        TTPoints.add(new double[]{700,250});
+        TTPoints.add(new double[]{700,50});
         TTPoints.add(new double[]{700,0});
         Board tableTop = new Board("TableTop", 50, TTPoints);
 
@@ -347,7 +352,7 @@ public class CreateJson {
         List<Joint> joints = new ArrayList<>();
         //Plug Connecting Lines must also be in CCW direction or shape will not turn out correctly.
         Joint joint1 = new Joint("Leg1", "TableTop", null, new double[][]{{200,0},{0,0}}, new double[][]{{0,50},{0,250}});
-        Joint joint2 = new Joint("Leg2", "TableTop", null, new double[][]{{200,0},{0,0}}, new double[][]{{700,50},{700,250}});
+        Joint joint2 = new Joint("Leg2", "TableTop", null, new double[][]{{200,0},{0,0}}, new double[][]{{700,250},{700,50}});
         joints.add(joint1);
         joints.add(joint2);
 

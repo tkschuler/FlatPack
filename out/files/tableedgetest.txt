@@ -11,11 +11,27 @@
         ],
         [
           0.0,
+          50.0
+        ],
+        [
+          0.0,
+          250.0
+        ],
+        [
+          0.0,
           300.0
         ],
         [
           700.0,
           300.0
+        ],
+        [
+          700.0,
+          250.0
+        ],
+        [
+          700.0,
+          50.0
         ],
         [
           700.0,
@@ -75,7 +91,7 @@
     {
       "plugName": "Leg1",
       "receptorName": "TableTop",
-      "jointType": null,
+      "jointCategory": null,
       "plugConnectingLine": [
         [
           200.0,
@@ -100,7 +116,7 @@
     {
       "plugName": "Leg2",
       "receptorName": "TableTop",
-      "jointType": null,
+      "jointCategory": null,
       "plugConnectingLine": [
         [
           200.0,
@@ -114,11 +130,11 @@
       "receptorConnectingLine": [
         [
           700.0,
-          50.0
+          250.0
         ],
         [
           700.0,
-          250.0
+          50.0
         ]
       ]
     }

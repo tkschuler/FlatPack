@@ -30,11 +30,11 @@ public class Plugs {
 
         //IN:  (-dy,dx)       CounterClockwise 90 degrees
         //OUT: (dy,-dx)       Clockwise 90 degrees
-        normalIn[0] = this.direction[1]*-1;
+        normalIn[0] = this.direction[1] * -1;
         normalIn[1] = this.direction[0];
 
-        normalOut[0]= this.direction[1];
-        normalOut[1]= this.direction[0]*-1;
+        normalOut[0] = this.direction[1];
+        normalOut[1] = this.direction[0] * -1;
     }
 
     //Counterclockwise orientation.  Everything to the right of a line path is outside of the shape.  Holes SHOULD
@@ -49,16 +49,16 @@ public class Plugs {
     //Same as Receptors Class
 
     //View Documentation from Receptors Class on how this function compliments making receptors.
-    public List<double[]> makeTeeth(){
+    public List<double[]> makeTeeth() {
         List<double[]> plugCoordinates = new ArrayList<>();
-        double[] point = new double[]{X1,Y1};
+        double[] point = new double[]{X1, Y1};
 
-        plugCoordinates.add(new double[]{X1,Y1});
-        toothDistance = distance/((numberOfTeeth*2)-1);
+        plugCoordinates.add(new double[]{X1, Y1});  //add first point to set of plug coordinates
+        toothDistance = distance / ((numberOfTeeth * 2) - 1);
 
 
-        for (int i=0; i<numberOfTeeth; i++) { //Loop for teeth
-            for (int j=0; j<3; j++){          //Loop for one tooth (This doesn't have to be a loop)
+        for (int i = 0; i < numberOfTeeth; i++) { //Loop for teeth
+            for (int j = 0; j < 3; j++) {          //Loop for one tooth (This doesn't have to be a loop)
                 if (j == 0) {
                     double[] tempPoint = new double[2];
 
@@ -96,7 +96,7 @@ public class Plugs {
                 }
             }
             //Move over plug distance if not final point
-            if (i != numberOfTeeth-1){
+            if (i != numberOfTeeth - 1) {
                 double[] tempPoint = new double[2];
 
                 tempPoint[0] = point[0] + direction[0] * toothDistance;
@@ -111,5 +111,75 @@ public class Plugs {
 
         return plugCoordinates;
 
+    }
+
+    public List<double[]> makeNegativeTeeth() {
+        List<double[]> plugCoordinates = new ArrayList<>();
+        double[] point = new double[]{X1, Y1};
+
+        plugCoordinates.add(new double[]{X1, Y1});  //add first point to set of plug coordinates
+        toothDistance = distance / ((numberOfTeeth * 2) - 1);
+
+        //First move over for spacing ----------------------------------------
+        double[] firsttempPoint = new double[2];
+
+        firsttempPoint[0] = point[0] + direction[0] * toothDistance;
+        firsttempPoint[1] = point[1] + direction[1] * toothDistance;
+
+        plugCoordinates.add(firsttempPoint);
+
+        point[0] = firsttempPoint[0];
+        point[1] = firsttempPoint[1];
+        //--------------------------------------------------------------------
+
+        for (int i = 0; i < numberOfTeeth - 1; i++) { //Loop for teeth
+            for (int j = 0; j < 4; j++) {          //Loop for one tooth (This doesn't have to be a loop)
+                if (j == 0) {
+                    double[] tempPoint = new double[2];
+
+                    tempPoint[0] = point[0] + normalIn[0] * plugThickness;
+                    tempPoint[1] = point[1] + normalIn[1] * plugThickness;
+
+                    plugCoordinates.add(tempPoint);
+
+                    point[0] = tempPoint[0];
+                    point[1] = tempPoint[1];
+                }
+                if (j == 1) {
+                    double[] tempPoint = new double[2];
+
+                    tempPoint[0] = point[0] + direction[0] * toothDistance;
+                    tempPoint[1] = point[1] + direction[1] * toothDistance;
+
+                    plugCoordinates.add(tempPoint);
+
+                    point[0] = tempPoint[0];
+                    point[1] = tempPoint[1];
+                }
+                if (j == 2) {
+                    double[] tempPoint = new double[2];
+
+                    tempPoint[0] = point[0] + normalOut[0] * plugThickness;
+                    tempPoint[1] = point[1] + normalOut[1] * plugThickness;
+
+                    plugCoordinates.add(tempPoint);
+
+                    point[0] = tempPoint[0];
+                    point[1] = tempPoint[1];
+                }
+                if (j == 3) {
+                    double[] tempPoint = new double[2];
+
+                    tempPoint[0] = point[0] + direction[0] * toothDistance;
+                    tempPoint[1] = point[1] + direction[1] * toothDistance;
+
+                    plugCoordinates.add(tempPoint);
+
+                    point[0] = tempPoint[0];
+                    point[1] = tempPoint[1];
+                }
+            }
+        }
+        return plugCoordinates;
     }
 }

@@ -89,6 +89,14 @@ class UpdateShapes {
         return plugCoordinates;
     }
 
+    public List<double[]> updateNegativePlugs() {
+        squareToothSpacing();
+        Plugs p = new Plugs(numberOfTeeth, distance, plugThickness, angle, X1, X2, Y1, Y2, direction);
+        List<double[]> plugCoordinates = p.makeNegativeTeeth();
+
+        return plugCoordinates;
+    }
+
     public static void main(String[] args) {
         double[][] connectingLine = new double[][]{{1, 2}, {5, 7}};
         UpdateShapes joint1 = new UpdateShapes("hi", 3, 30.0, connectingLine);
