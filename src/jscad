@@ -1,0 +1,19 @@
+var cag2 = new CAG();
+  var cag22 = new CAG();
+  var cag222 = new CSG.Path2D([[0,0]],false);
+  cag222 = cag222.appendPoint([0,-84.66666]);
+  cag222 = cag222.appendPoint([56.44443999999999,-84.66666]);
+  cag222 = cag222.appendPoint([56.44443999999999,0]);
+  cag222 = cag222.appendPoint([37.62962666666666,0]);
+  cag222 = cag222.appendPoint([37.62962666666666,5.644443999999999]);
+  cag222 = cag222.appendPoint([18.814813333333326,5.644443999999999]);
+  cag222 = cag222.appendPoint([18.814813333333326,0]);
+  cag222 = cag222.close();
+  cag222 = cag222.innerToCAG();
+  cag22 = cag22.union(cag222);
+  cag2 = cag2.union(cag22);
+  
+  cag2 = linear_extrude( { height: 10 }, cag1 );
+  cag2= cag1.setColor(css2rgb('yellow'));
+  
+  return cag2;
