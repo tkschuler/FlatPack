@@ -1,4 +1,4 @@
-import com.google.gson.Gson;
+import com.google.gson.Gson;  //Needed for dealing with JSON data
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-class Furniture{
+class Furniture{ //Main object
     String furnitureName;
     List<Board> boards;
     List<Joint> joints;
@@ -38,6 +38,8 @@ class Furniture{
         return furnitureName;
     }
 
+    //determineJointType() returns either edge or Not edge. The method checks for coincidence between a connecting line
+    //and every line on a board's main coordinates.  If the lines are ever coincident, than it is an edge joint.
     public void determineJointType(){
         for (Joint j: joints){
             List<double[]> b1coords = new ArrayList<>();
@@ -68,13 +70,6 @@ class Furniture{
 
             }
 
-            /*
-            if (b1coincidence == true)
-                System.out.println("Plug lines coincide.");
-            else
-                System.out.println("Plugs Not coincident.");
-                */
-
             for (int i = 0; i< b2coords.size(); i++){
                 if (i == 0){
                     b2coincidence = checkCoincidence(b2coords.get(b2coords.size()-1), b2coords.get(i), j.receptorConnectingLine[0], j.receptorConnectingLine[1]);
@@ -88,23 +83,17 @@ class Furniture{
 
             }
 
-            /*
-            if (b2coincidence == true)
-                System.out.println("Receptor lines coincide.");
-            else
-                System.out.println("Receptor Not coincident.");
-                */
-
             if (b1coincidence == true && b2coincidence == true){
                 j.setJointCategory("Edge");
             }
             else
                 j.setJointCategory("notEdge");
-
-
         }
     }
 
+    //checkCoincidence() checks if two lines are coincident. x & y-coordinates are needed for each start and end point.
+    //First slopes are checked to see if they are equal.  If they are equal, then the connecting line is checked to make sure it is
+    //equal to in length, or within the min and max points of a line on a board's main coordinates.
     public boolean checkCoincidence(double[] boardPoint1, double[] boardPoint2, double[] connectingLine1, double[] connectingLine2) {
 
         double angle1 = Math.abs(Math.atan((boardPoint2[1] - boardPoint1[1]) / (boardPoint2[0] - boardPoint1[0])));
@@ -113,6 +102,7 @@ class Furniture{
         if (angle1 != angle2)
             return false;
 
+        //min and max must be determined because of negative slopes.
         double maxX;
         double minX;
         double maxY;
@@ -376,6 +366,5 @@ public class CreateJson {
         } catch (IOException e) {
             // do something
         }
-
     }
 }

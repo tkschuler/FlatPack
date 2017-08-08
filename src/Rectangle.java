@@ -60,8 +60,9 @@ public class Rectangle {
     }
 
     public List<double[]> createRotatedRectangleCorners() {
-        //Top Right Corner
+        //Points are rotated about origin using (x',y')= ((xcosθ - ysinθ),(ycosθ-xsinθ)
 
+        //Top Right Corner
 
         double[] point = new double[2];
         point[0] = centerPoint[0] + (Math.cos(angle) * (rectangle.get(0)[0] - centerPoint[0]) - Math.sin(angle) * (rectangle.get(0)[1] - centerPoint[1]));

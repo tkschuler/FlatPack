@@ -25,11 +25,6 @@ public class UpdateBoards {
         d.deserializeJSON();
         Furniture item = d.deserializeJSON();
 
-        //testing for now
-        //numberOfTeeth = 3;
-        //jointType = "sawtooth";
-        //plugThickness = 50.0;
-
         List<List<double[]>> holes = new ArrayList<>();
         for (int i = 0; i < item.joints.size(); i++) {
             Joint j = item.joints.get(i);
@@ -84,8 +79,6 @@ public class UpdateBoards {
         test.createUpdatedSVGFile(item);
     }
 
-
-
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
     public static void main(String[] args) throws IOException {
@@ -96,33 +89,13 @@ public class UpdateBoards {
 
         System.out.println("Please individually select specs for each joint in \"" + item.getFurnitureName() + "\"");
 
-        //testing for now
-        //numberOfTeeth = 3;
-        //jointType = "squaretooth";
-        //plugThickness = 50.0;
-
-
-/*
-        //Check if Edge joint is possible
-        if (jointType.equals("Edge Squaretooth")) {
-            for (int n = 0; n < item.joints.size(); n++) {
-                Joint j = item.joints.get(n);
-                for (Board b : item.boards) {
-                    if (b.getBoardName().equals(j.receptorName)) {
-            }
-
-
-        }
+        /*
+        /Users/tristanschuler/Desktop/FlatPack/out/files/tabletest.txt
         */
-
-
-        ///Users/tristanschuler/Desktop/FlatPack/out/files/tableedgetest.txt
-        ///Users/tristanschuler/Desktop/FlatPack/out/files/tabletest.txt
 
         for (int i = 0; i < item.joints.size(); i++) {
             Joint j = item.joints.get(i);
             System.out.println(j.toString() + "\n");
-
 
             if (j.jointCategory.equals("notEdge")) {
                 //Get joint specifications from the user for each individual joint.
@@ -140,7 +113,6 @@ public class UpdateBoards {
                 System.out.println("What is the board thickness? [Enter in 0.0 format]");
                 plugThickness = s1.nextDouble();
                 //s1.close();
-
 
                 if (jointType.equals("Squaretooth")) {
                     List<List<double[]>> holes;
@@ -240,7 +212,6 @@ public class UpdateBoards {
                 }
             }
         }
-
 
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting().serializeNulls();

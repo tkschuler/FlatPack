@@ -1,0 +1,125 @@
+//
+// producer: OpenJSCAD.org 1.0.1 SVG Importer
+// date: Mon Aug 07 2017 18:27:00 GMT-0400 (EDT)
+// source: updated_TableTop.svg
+//
+
+var table = new Array();
+
+function main(params) {
+  var cag0 = new CAG();
+  var cag00 = new CAG();
+  var cag001 = new CSG.Path2D([[0,0]],false);
+  cag001 = cag001.appendPoint([0,-14.111109999999998]);
+  cag001 = cag001.appendPoint([-7.055554999999999,-14.111109999999998]);
+  cag001 = cag001.appendPoint([-7.055554999999999,-22.174601428571425]);
+  cag001 = cag001.appendPoint([0,-22.174601428571425]);
+  cag001 = cag001.appendPoint([0,-30.238092857142853]);
+  cag001 = cag001.appendPoint([-7.055554999999999,-30.238092857142853]);
+  cag001 = cag001.appendPoint([-7.055554999999999,-38.301584285714284]);
+  cag001 = cag001.appendPoint([0,-38.301584285714284]);
+  cag001 = cag001.appendPoint([0,-46.365075714285716]);
+  cag001 = cag001.appendPoint([-7.055554999999999,-46.365075714285716]);
+  cag001 = cag001.appendPoint([-7.055554999999999,-54.42856714285715]);
+  cag001 = cag001.appendPoint([0,-54.42856714285715]);
+  cag001 = cag001.appendPoint([0,-62.49205857142858]);
+  cag001 = cag001.appendPoint([-7.055554999999999,-62.49205857142858]);
+  cag001 = cag001.appendPoint([-7.055554999999999,-70.55555000000001]);
+  cag001 = cag001.appendPoint([0,-70.55555000000001]);
+  cag001 = cag001.appendPoint([0,-70.55555]);
+  cag001 = cag001.appendPoint([0,-84.66666]);
+  cag001 = cag001.appendPoint([197.55553999999998,-84.66666]);
+  cag001 = cag001.appendPoint([197.55553999999998,-70.55555]);
+  cag001 = cag001.appendPoint([204.61109499999998,-70.55555]);
+  cag001 = cag001.appendPoint([204.61109499999998,-62.492058571428565]);
+  cag001 = cag001.appendPoint([197.55553999999998,-62.492058571428565]);
+  cag001 = cag001.appendPoint([197.55553999999998,-54.42856714285713]);
+  cag001 = cag001.appendPoint([204.61109499999998,-54.42856714285713]);
+  cag001 = cag001.appendPoint([204.61109499999998,-46.3650757142857]);
+  cag001 = cag001.appendPoint([197.55553999999998,-46.3650757142857]);
+  cag001 = cag001.appendPoint([197.55553999999998,-38.30158428571427]);
+  cag001 = cag001.appendPoint([204.61109499999998,-38.30158428571427]);
+  cag001 = cag001.appendPoint([204.61109499999998,-30.238092857142842]);
+  cag001 = cag001.appendPoint([197.55553999999998,-30.238092857142842]);
+  cag001 = cag001.appendPoint([197.55553999999998,-22.174601428571414]);
+  cag001 = cag001.appendPoint([204.61109499999998,-22.174601428571414]);
+  cag001 = cag001.appendPoint([204.61109499999998,-14.111109999999986]);
+  cag001 = cag001.appendPoint([197.55553999999998,-14.111109999999986]);
+  cag001 = cag001.appendPoint([197.55553999999998,-14.111109999999998]);
+  cag001 = cag001.appendPoint([197.55553999999998,0]);
+  cag001 = cag001.close();
+  cag001 = cag001.innerToCAG();
+  cag00 = cag00.union(cag001);
+  cag0 = cag0.union(cag00);
+  
+  cag0 = linear_extrude( { height: 7 }, cag0 );
+  cag0 = translate([-100,40,100],cag0);
+  
+  table[0] = cag0.scale(2/3);
+  
+    var cag1 = new CAG();
+  var cag11 = new CAG();
+  var cag111 = new CSG.Path2D([[0,0]],false);
+  cag111 = cag111.appendPoint([0,-84.66666]);
+  cag111 = cag111.appendPoint([56.44443999999999,-84.66666]);
+  cag111 = cag111.appendPoint([56.44443999999999,0]);
+  cag111 = cag111.appendPoint([48.38094857142856,0]);
+  cag111 = cag111.appendPoint([48.38094857142856,7.055554999999999]);
+  cag111 = cag111.appendPoint([40.31745714285713,7.055554999999999]);
+  cag111 = cag111.appendPoint([40.31745714285713,0]);
+  cag111 = cag111.appendPoint([32.253965714285705,0]);
+  cag111 = cag111.appendPoint([32.253965714285705,7.055554999999999]);
+  cag111 = cag111.appendPoint([24.190474285714277,7.055554999999999]);
+  cag111 = cag111.appendPoint([24.190474285714277,0]);
+  cag111 = cag111.appendPoint([16.12698285714285,0]);
+  cag111 = cag111.appendPoint([16.12698285714285,7.055554999999999]);
+  cag111 = cag111.appendPoint([8.063491428571423,7.055554999999999]);
+  cag111 = cag111.appendPoint([8.063491428571423,0]);
+  cag111 = cag111.close();
+  cag111 = cag111.innerToCAG();
+  cag11 = cag11.union(cag111);
+  cag1 = cag1.union(cag11);
+
+  cag1 = linear_extrude( { height: 7 }, cag1 );
+  cag1= cag1.setColor(css2rgb('dodgerblue'));
+
+  cag1 = rotate([90,0,90],cag1);
+  cag1 = translate([97.5,-30.5,100],cag1);
+  
+  table[1] = cag1.scale(2/3);
+  
+  
+    var cag2 = new CAG();
+  var cag22 = new CAG();
+  var cag222 = new CSG.Path2D([[0,0]],false);
+  cag222 = cag222.appendPoint([0,-84.66666]);
+  cag222 = cag222.appendPoint([56.44443999999999,-84.66666]);
+  cag222 = cag222.appendPoint([56.44443999999999,0]);
+  cag222 = cag222.appendPoint([48.38094857142856,0]);
+  cag222 = cag222.appendPoint([48.38094857142856,7.055554999999999]);
+  cag222 = cag222.appendPoint([40.31745714285713,7.055554999999999]);
+  cag222 = cag222.appendPoint([40.31745714285713,0]);
+  cag222 = cag222.appendPoint([32.253965714285705,0]);
+  cag222 = cag222.appendPoint([32.253965714285705,7.055554999999999]);
+  cag222 = cag222.appendPoint([24.190474285714277,7.055554999999999]);
+  cag222 = cag222.appendPoint([24.190474285714277,0]);
+  cag222 = cag222.appendPoint([16.12698285714285,0]);
+  cag222 = cag222.appendPoint([16.12698285714285,7.055554999999999]);
+  cag222 = cag222.appendPoint([8.063491428571423,7.055554999999999]);
+  cag222 = cag222.appendPoint([8.063491428571423,0]);
+  cag222 = cag222.close();
+  cag222 = cag222.innerToCAG();
+  cag22 = cag22.union(cag222);
+  cag2 = cag2.union(cag22);
+
+  cag2 = linear_extrude( { height: 7 }, cag2 );
+  cag2= cag2.setColor(css2rgb('yellow'));
+  cag2 = rotate([90,0,90],cag2);
+  cag2 = translate([-107,-30.5,100],cag2);
+  
+  table[2] = cag2.scale(2/3);
+  
+  
+  
+  return table;
+}

@@ -16,7 +16,7 @@ public class DeserializeJSON {
         return new String(encoded, encoding);
     }
 
-    //this method can be called by main file that still needs to be written.
+    //this method is called by UpdateBoards to create furniture items from JSON files.
     public Furniture deserializeJSON() throws IOException{
         System.out.println("Path of Furniture JSON file:");
         Scanner s = new Scanner(System.in);

@@ -1,0 +1,31 @@
+function main(params) {
+  var cag1 = new CAG();
+  var cag11 = new CAG();
+  var cag111 = new CSG.Path2D([[0,0]],false);
+  cag111 = cag111.appendPoint([0,-84.66666]);
+  cag111 = cag111.appendPoint([56.44443999999999,-84.66666]);
+  cag111 = cag111.appendPoint([56.44443999999999,0]);
+  cag111 = cag111.appendPoint([48.38094857142856,0]);
+  cag111 = cag111.appendPoint([48.38094857142856,7.055554999999999]);
+  cag111 = cag111.appendPoint([40.31745714285713,7.055554999999999]);
+  cag111 = cag111.appendPoint([40.31745714285713,0]);
+  cag111 = cag111.appendPoint([32.253965714285705,0]);
+  cag111 = cag111.appendPoint([32.253965714285705,7.055554999999999]);
+  cag111 = cag111.appendPoint([24.190474285714277,7.055554999999999]);
+  cag111 = cag111.appendPoint([24.190474285714277,0]);
+  cag111 = cag111.appendPoint([16.12698285714285,0]);
+  cag111 = cag111.appendPoint([16.12698285714285,7.055554999999999]);
+  cag111 = cag111.appendPoint([8.063491428571423,7.055554999999999]);
+  cag111 = cag111.appendPoint([8.063491428571423,0]);
+  cag111 = cag111.close();
+  cag111 = cag111.innerToCAG();
+  cag11 = cag11.union(cag111);
+  cag1 = cag1.union(cag11);
+
+  cag1 = linear_extrude( { height: 10 }, cag1 );
+  cag1= cag1.setColor(css2rgb('dodgerblue'));
+
+  cag1 = rotate([90,0,90],cag1);
+  cag1 = translate([98,-30.6,99.9],cag1);
+  return cag1;
+}

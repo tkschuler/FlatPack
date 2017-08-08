@@ -91,7 +91,6 @@ public class Receptors {
 
             rectangles.add(rectangle);
         }
-
         return rectangles;
     }
 }
